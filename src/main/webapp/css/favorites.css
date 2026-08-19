@@ -1,0 +1,16 @@
+.card {
+	box-shadow: 0 2px 8px #ddd
+}
+
+.card img {
+	height: 220px;
+	object-fit: cover
+}
+
+.card-body {
+	text-align: center
+}
+
+.btn {
+	margin-top: 5px
+}

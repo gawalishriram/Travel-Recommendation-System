@@ -1,0 +1,390 @@
+@charset "UTF-8";
+
+/* =========================================================
+   ADMIN DASHBOARD
+   ========================================================= */
+
+.dashboard-page {
+    min-height: calc(100vh - 80px);
+    padding: 30px;
+    background: #f5f7fb;
+}
+
+/* =========================================================
+   DASHBOARD HEADER
+   ========================================================= */
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.dashboard-header h2 {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #172033;
+}
+
+.dashboard-header p {
+    margin: 6px 0 0;
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    color: #64748b;
+}
+
+/* =========================================================
+   STAT CARDS
+   ========================================================= */
+
+.dashboard-stat-card {
+    min-height: 170px;
+    width: 100%;
+    padding: 25px;
+
+    border-radius: 20px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 22px;
+
+    color: #ffffff;
+
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.10);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.dashboard-stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 35px rgba(15, 23, 42, 0.15);
+}
+
+/* =========================================================
+   USERS CARD
+   ========================================================= */
+
+.dashboard-stat-card.users-card {
+    background: linear-gradient(
+        135deg,
+        #2563eb,
+        #60a5fa
+    );
+}
+
+/* =========================================================
+   DESTINATIONS CARD
+   ========================================================= */
+
+.dashboard-stat-card.destinations-card {
+    background: linear-gradient(
+        135deg,
+        #059669,
+        #34d399
+    );
+}
+
+/* =========================================================
+   STAT ICON
+   ========================================================= */
+
+.dashboard-stat-icon {
+    width: 70px;
+    height: 70px;
+
+    min-width: 70px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 18px;
+
+    background: rgba(255, 255, 255, 0.20);
+
+    font-size: 34px;
+
+    color: #ffffff;
+}
+
+/* =========================================================
+   STAT CONTENT
+   ========================================================= */
+
+.dashboard-stat-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard-stat-value {
+    font-family: "Poppins", sans-serif;
+
+    font-size: 36px;
+
+    line-height: 1;
+
+    font-weight: 700;
+
+    margin-bottom: 10px;
+
+    color: #ffffff;
+}
+
+.dashboard-stat-label {
+    font-family: "Poppins", sans-serif;
+
+    font-size: 15px;
+
+    font-weight: 500;
+
+    color: #ffffff;
+
+    opacity: 0.95;
+}
+
+/* =========================================================
+   MANAGEMENT CARDS
+   ========================================================= */
+
+.dashboard-management-card {
+    min-height: 270px;
+
+    width: 100%;
+
+    background: #ffffff;
+
+    border-radius: 20px;
+
+    padding: 30px;
+
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    box-shadow: 0 8px 25px rgba(15, 23, 42, 0.07);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.dashboard-management-card:hover {
+    transform: translateY(-4px);
+
+    box-shadow: 0 14px 35px rgba(15, 23, 42, 0.11);
+}
+
+/* =========================================================
+   MANAGEMENT ICON
+   ========================================================= */
+
+.management-icon {
+    width: 60px;
+    height: 60px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 16px;
+
+    background: #eaf1ff;
+
+    color: #2563eb;
+
+    font-size: 27px;
+
+    margin-bottom: 18px;
+}
+
+/* =========================================================
+   MANAGEMENT TITLE
+   ========================================================= */
+
+.dashboard-management-card h3 {
+    margin: 0 0 10px;
+
+    font-family: "Poppins", sans-serif;
+
+    font-size: 24px;
+
+    font-weight: 700;
+
+    color: #172033;
+}
+
+/* =========================================================
+   MANAGEMENT DESCRIPTION
+   ========================================================= */
+
+.dashboard-management-card p {
+    margin: 0 0 20px;
+
+    max-width: 500px;
+
+    font-family: "Poppins", sans-serif;
+
+    font-size: 15px;
+
+    line-height: 1.6;
+
+    color: #64748b;
+}
+
+/* =========================================================
+   OPEN BUTTON
+   ========================================================= */
+
+.dashboard-open-btn {
+    min-width: 95px;
+
+    padding: 10px 25px;
+
+    border-radius: 30px;
+
+    text-decoration: none;
+
+    font-family: "Poppins", sans-serif;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    display: inline-block;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.dashboard-open-btn:hover {
+    transform: translateY(-2px);
+
+    text-decoration: none;
+}
+
+/* =========================================================
+   DESTINATION BUTTON
+   ========================================================= */
+
+.destination-btn {
+    background: #2563eb;
+
+    color: #ffffff;
+}
+
+.destination-btn:hover {
+    background: #1d4ed8;
+
+    color: #ffffff;
+
+    box-shadow:
+        0 6px 15px rgba(37, 99, 235, 0.30);
+}
+
+/* =========================================================
+   USERS BUTTON
+   ========================================================= */
+
+.users-btn {
+    background: #fbbf24;
+
+    color: #111827;
+}
+
+.users-btn:hover {
+    background: #f59e0b;
+
+    color: #111827;
+
+    box-shadow:
+        0 6px 15px rgba(245, 158, 11, 0.30);
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 992px) {
+
+    .dashboard-page {
+        padding: 25px 20px;
+    }
+
+    .dashboard-stat-card {
+        min-height: 155px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .dashboard-page {
+        padding: 20px 15px;
+    }
+
+    .dashboard-header h2 {
+        font-size: 24px;
+    }
+
+    .dashboard-stat-card {
+        min-height: 145px;
+        padding: 20px;
+    }
+
+    .dashboard-stat-icon {
+        width: 58px;
+        min-width: 58px;
+        height: 58px;
+        font-size: 27px;
+    }
+
+    .dashboard-stat-value {
+        font-size: 30px;
+    }
+
+    .dashboard-management-card {
+        min-height: 240px;
+        padding: 25px;
+    }
+}
+
+@media (max-width: 576px) {
+
+    .dashboard-page {
+        padding: 18px 12px;
+    }
+
+    .dashboard-stat-card {
+        gap: 15px;
+    }
+
+    .dashboard-stat-icon {
+        width: 50px;
+        min-width: 50px;
+        height: 50px;
+        font-size: 23px;
+    }
+
+    .dashboard-stat-value {
+        font-size: 27px;
+    }
+
+    .dashboard-stat-label {
+        font-size: 13px;
+    }
+
+    .dashboard-management-card h3 {
+        font-size: 21px;
+    }
+}

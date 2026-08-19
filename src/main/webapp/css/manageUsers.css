@@ -1,0 +1,927 @@
+@charset "UTF-8";
+
+/*
+============================================================
+MANAGE USERS PAGE
+============================================================
+*/
+
+body {
+    font-family: "Poppins", sans-serif;
+    background: #f5f7fb;
+    color: #212529;
+}
+
+
+/*
+============================================================
+USER PAGE
+============================================================
+*/
+
+.user-page {
+    min-height: 100vh;
+    padding: 30px;
+}
+
+
+/*
+============================================================
+HEADER
+============================================================
+*/
+
+.user-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 25px;
+
+    gap: 20px;
+}
+
+
+.user-title h2 {
+    margin: 0;
+
+    font-weight: 700;
+
+    color: #212529;
+}
+
+
+.user-title p {
+    margin: 6px 0 0;
+
+    color: #6c757d;
+
+    font-size: 14px;
+}
+
+
+.user-header-actions {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+
+.user-header-actions .btn {
+    border-radius: 10px;
+
+    padding: 10px 18px;
+
+    font-weight: 500;
+}
+
+
+/*
+============================================================
+MESSAGE
+============================================================
+*/
+
+#userMessage {
+    border-radius: 10px;
+
+    font-size: 14px;
+
+    margin-bottom: 20px;
+}
+
+
+/*
+============================================================
+STATISTICS
+============================================================
+*/
+
+.user-stat-card {
+    background: #ffffff;
+
+    border: none;
+
+    border-radius: 16px;
+
+    padding: 22px;
+
+    height: 100%;
+
+    box-shadow:
+        0 5px 20px rgba(0, 0, 0, 0.06);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+
+.user-stat-card:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.09);
+}
+
+
+.user-stat-content {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+}
+
+
+.user-stat-label {
+    color: #6c757d;
+
+    font-size: 13px;
+
+    margin-bottom: 6px;
+}
+
+
+.user-stat-value {
+    font-size: 27px;
+
+    font-weight: 700;
+
+    color: #212529;
+}
+
+
+.user-stat-icon {
+    width: 52px;
+
+    height: 52px;
+
+    border-radius: 14px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 21px;
+}
+
+
+/*
+============================================================
+STAT COLORS
+============================================================
+*/
+
+.user-stat-icon.total {
+    background: #e8f0ff;
+
+    color: #0d6efd;
+}
+
+
+.user-stat-icon.male {
+    background: #e8f0ff;
+
+    color: #0d6efd;
+}
+
+
+.user-stat-icon.female {
+    background: #fdebf3;
+
+    color: #d63384;
+}
+
+
+.user-stat-icon.other {
+    background: #f0ecff;
+
+    color: #6f42c1;
+}
+
+
+/*
+============================================================
+FILTER CARD
+============================================================
+*/
+
+.user-filter-card {
+    background: #ffffff;
+
+    border-radius: 16px;
+
+    padding: 22px;
+
+    margin-top: 25px;
+
+    box-shadow:
+        0 5px 20px rgba(0, 0, 0, 0.06);
+}
+
+
+.user-filter-title {
+    font-size: 16px;
+
+    font-weight: 600;
+
+    margin-bottom: 15px;
+}
+
+
+.user-filter-card .input-group {
+    height: 45px;
+}
+
+
+.user-filter-card .input-group-text {
+    background: #ffffff;
+
+    border-color: #dee2e6;
+
+    color: #6c757d;
+}
+
+
+.user-filter-card .form-control {
+    height: 45px;
+
+    border-color: #dee2e6;
+
+    font-size: 14px;
+}
+
+
+.user-filter-card .form-control:focus {
+    border-color: #86b7fe;
+
+    box-shadow:
+        0 0 0 0.2rem
+        rgba(13, 110, 253, 0.1);
+}
+
+
+/*
+============================================================
+FILTER BUTTONS
+============================================================
+*/
+
+.user-filter-buttons {
+    display: flex;
+
+    gap: 7px;
+
+    flex-wrap: wrap;
+}
+
+
+.user-filter-buttons .btn {
+    border-radius: 9px;
+
+    font-size: 13px;
+
+    padding: 8px 14px;
+
+    font-weight: 500;
+}
+
+
+.user-filter-buttons .btn.active {
+    color: #ffffff;
+
+    background: #0d6efd;
+
+    border-color: #0d6efd;
+}
+
+
+/*
+============================================================
+TABLE CARD
+============================================================
+*/
+
+.user-table-card {
+    background: #ffffff;
+
+    border-radius: 16px;
+
+    margin-top: 25px;
+
+    box-shadow:
+        0 5px 20px rgba(0, 0, 0, 0.06);
+
+    overflow: hidden;
+}
+
+
+/*
+============================================================
+TABLE HEADER
+============================================================
+*/
+
+.user-table-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 20px 22px;
+
+    border-bottom:
+        1px solid #eeeeee;
+
+    gap: 15px;
+}
+
+
+.user-table-header h5 {
+    margin: 0;
+
+    font-weight: 600;
+}
+
+
+.user-table-header small {
+    color: #6c757d;
+
+    font-size: 12px;
+}
+
+
+.user-table-header .badge {
+    border-radius: 20px;
+
+    padding: 7px 12px;
+
+    font-weight: 500;
+}
+
+
+/*
+============================================================
+TABLE WRAPPER
+============================================================
+*/
+
+.user-table-wrapper {
+    width: 100%;
+
+    overflow-x: auto;
+}
+
+
+/*
+============================================================
+TABLE
+============================================================
+*/
+
+.user-table {
+    width: 100%;
+
+    min-width: 1100px;
+
+    margin: 0;
+}
+
+
+.user-table thead th {
+    background: #f8f9fa;
+
+    color: #495057;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    padding: 15px;
+
+    white-space: nowrap;
+
+    border-bottom:
+        1px solid #dee2e6;
+}
+
+
+.user-table tbody td {
+    padding: 14px 15px;
+
+    vertical-align: middle;
+
+    font-size: 13px;
+
+    color: #495057;
+
+    border-bottom:
+        1px solid #f0f0f0;
+}
+
+
+.user-table tbody tr {
+    transition:
+        background 0.2s ease;
+}
+
+
+.user-table tbody tr:hover {
+    background: #f8faff;
+}
+
+
+.user-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/*
+============================================================
+USER ID
+============================================================
+*/
+
+.user-id {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-width: 45px;
+
+    padding: 5px 9px;
+
+    border-radius: 7px;
+
+    background: #f1f3f5;
+
+    color: #495057;
+
+    font-size: 12px;
+
+    font-weight: 600;
+}
+
+
+/*
+============================================================
+USER NAME
+============================================================
+*/
+
+.user-name-wrapper {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+
+.user-avatar {
+    width: 40px;
+
+    height: 40px;
+
+    min-width: 40px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: #e8f0ff;
+
+    color: #0d6efd;
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+
+.user-name {
+    color: #212529;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+
+/*
+============================================================
+EMAIL
+============================================================
+*/
+
+.user-email {
+    color: #0d6efd;
+
+    text-decoration: none;
+
+    font-size: 13px;
+}
+
+
+.user-email:hover {
+    text-decoration: underline;
+}
+
+
+/*
+============================================================
+MOBILE
+============================================================
+*/
+
+.user-mobile {
+    color: #495057;
+
+    text-decoration: none;
+}
+
+
+.user-mobile:hover {
+    color: #0d6efd;
+}
+
+
+/*
+============================================================
+GENDER
+============================================================
+*/
+
+.user-gender {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-width: 65px;
+
+    padding: 5px 11px;
+
+    border-radius: 20px;
+
+    font-size: 11px;
+
+    font-weight: 600;
+}
+
+
+.user-gender.male {
+    background: #e8f0ff;
+
+    color: #0d6efd;
+}
+
+
+.user-gender.female {
+    background: #fdebf3;
+
+    color: #d63384;
+}
+
+
+.user-gender.other {
+    background: #f1f3f5;
+
+    color: #6c757d;
+}
+
+
+/*
+============================================================
+ADDRESS
+============================================================
+*/
+
+.user-address {
+    display: inline-block;
+
+    max-width: 220px;
+
+    color: #6c757d;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+
+/*
+============================================================
+DATE
+============================================================
+*/
+
+.user-date {
+    color: #6c757d;
+
+    white-space: nowrap;
+
+    font-size: 12px;
+}
+
+
+/*
+============================================================
+ACTIONS
+============================================================
+*/
+
+.user-actions {
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 6px;
+}
+
+
+.user-action {
+    width: 34px;
+
+    height: 34px;
+
+    padding: 0;
+
+    display: inline-flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    border-radius: 8px;
+}
+
+
+.user-action:hover {
+    transform: translateY(-1px);
+}
+
+
+/*
+============================================================
+LOADING
+============================================================
+*/
+
+.user-loading {
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 10px;
+
+    color: #6c757d;
+
+    font-size: 14px;
+}
+
+
+.user-loading i {
+    color: #0d6efd;
+
+    font-size: 18px;
+}
+
+
+/*
+============================================================
+EMPTY STATE
+============================================================
+*/
+
+.user-empty {
+    padding: 20px;
+}
+
+
+.user-empty-icon {
+    width: 65px;
+
+    height: 65px;
+
+    margin: 0 auto 15px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: #f1f3f5;
+
+    color: #6c757d;
+
+    font-size: 25px;
+}
+
+
+.user-empty h6 {
+    font-weight: 600;
+
+    margin-bottom: 5px;
+
+    color: #343a40;
+}
+
+
+.user-empty p {
+    margin: 0;
+
+    color: #6c757d;
+
+    font-size: 13px;
+}
+
+
+/*
+============================================================
+ERROR
+============================================================
+*/
+
+.user-error {
+    padding: 20px;
+}
+
+
+.user-error > i {
+    color: #dc3545;
+
+    font-size: 30px;
+
+    margin-bottom: 12px;
+}
+
+
+.user-error h6 {
+    font-weight: 600;
+
+    margin-bottom: 5px;
+}
+
+
+.user-error p {
+    color: #6c757d;
+
+    font-size: 13px;
+
+    margin-bottom: 15px;
+}
+
+
+/*
+============================================================
+RESPONSIVE - 992px
+============================================================
+*/
+
+@media (max-width: 992px) {
+
+    .user-page {
+        padding: 20px;
+    }
+
+
+    .user-header {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+
+    .user-header-actions {
+        width: 100%;
+    }
+
+
+    .user-header-actions .btn {
+        flex: 1;
+    }
+
+}
+
+
+/*
+============================================================
+RESPONSIVE - 768px
+============================================================
+*/
+
+@media (max-width: 768px) {
+
+    .user-page {
+        padding: 15px;
+    }
+
+
+    .user-title h2 {
+        font-size: 22px;
+    }
+
+
+    .user-stat-card {
+        padding: 18px;
+    }
+
+
+    .user-stat-value {
+        font-size: 24px;
+    }
+
+
+    .user-filter-card {
+        padding: 16px;
+    }
+
+
+    .user-filter-buttons {
+        margin-top: 5px;
+    }
+
+
+    .user-table-header {
+        padding: 16px;
+
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+
+    .user-table-header > div:last-child {
+        width: 100%;
+    }
+
+}
+
+
+/*
+============================================================
+RESPONSIVE - 576px
+============================================================
+*/
+
+@media (max-width: 576px) {
+
+    .user-header-actions {
+        flex-direction: column;
+
+        width: 100%;
+    }
+
+
+    .user-header-actions .btn {
+        width: 100%;
+
+        flex: none;
+    }
+
+
+    .user-filter-buttons {
+        display: grid;
+
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+
+    .user-filter-buttons .btn {
+        width: 100%;
+    }
+
+
+    .user-stat-icon {
+        width: 45px;
+
+        height: 45px;
+
+        font-size: 18px;
+    }
+
+}
