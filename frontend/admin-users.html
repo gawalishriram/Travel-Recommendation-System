@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manage Users — TravelSphere Admin</title>
+  <meta name="description" content="Admin: manage registered users." />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="admin-dashboard.html" class="nav-brand">🛡️ TravelSphere Admin</a>
+  <ul class="nav-links">
+    <li><a href="admin-dashboard.html">Dashboard</a></li>
+    <li><a href="admin-users.html" class="active">Users</a></li>
+    <li><a href="admin-destinations.html">Destinations</a></li>
+    <li><a href="admin-bookings.html">Bookings</a></li>
+    <li><a href="#" onclick="Auth.logoutAdmin('admin-login.html')">Logout</a></li>
+  </ul>
+</nav>
+
+<div class="admin-layout">
+  <aside class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-label">Overview</div>
+      <a href="admin-dashboard.html" class="sidebar-link"><span class="sidebar-icon">📊</span> Dashboard</a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Manage</div>
+      <a href="admin-users.html" class="sidebar-link active"><span class="sidebar-icon">👥</span> Users</a>
+      <a href="admin-destinations.html" class="sidebar-link"><span class="sidebar-icon">🗺️</span> Destinations</a>
+      <a href="admin-bookings.html" class="sidebar-link"><span class="sidebar-icon">🧳</span> Bookings</a>
+    </div>
+  </aside>
+
+  <main class="admin-main">
+    <div class="page-header d-flex justify-between align-center flex-wrap gap-2">
+      <div>
+        <h1 class="page-title">Users</h1>
+        <p class="page-subtitle">Manage all registered users</p>
+      </div>
+      <div class="d-flex align-center gap-2">
+        <span id="totalUsersCount" class="text-muted" style="font-size:0.85rem"></span>
+      </div>
+    </div>
+
+    <!-- SEARCH -->
+    <div class="filter-bar mb-2">
+      <input type="text" id="searchInput" placeholder="🔍 Search by name or email…" oninput="searchUsers()" style="min-width:300px" />
+    </div>
+
+    <!-- TABLE -->
+    <div id="loader" class="loading-state"><div class="spinner"></div></div>
+
+    <div class="table-wrapper" id="tableWrapper" style="display:none">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Mobile</th>
+            <th>Gender</th>
+            <th>Joined</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="usersTable"></tbody>
+      </table>
+    </div>
+
+    <div id="emptyState" class="empty-state d-none">
+      <div class="empty-icon">👥</div>
+      <h3>No users found</h3>
+    </div>
+
+    <!-- PAGINATION -->
+    <div class="pagination" id="pagination"></div>
+  </main>
+</div>
+
+<!-- DELETE CONFIRM MODAL -->
+<div class="modal-overlay" id="deleteModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 class="modal-title">Delete User</h3>
+      <button class="modal-close" onclick="closeDeleteModal()">✕</button>
+    </div>
+    <p style="color:var(--text-secondary)">Are you sure you want to delete <strong id="deleteUserName"></strong>? All their data will be permanently removed.</p>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeDeleteModal()">Cancel</button>
+      <button class="btn btn-danger" id="confirmDeleteBtn" onclick="confirmDelete()">Delete User</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/auth.js"></script>
+<script src="js/api.js"></script>
+<script>
+  if (!Auth.requireAdmin()) throw new Error('Redirecting');
+
+  const token = Auth.getAdminToken();
+  let allUsers = [];
+  let deleteUserId = null;
+  let currentPage = 0;
+  const PAGE_SIZE = 10;
+  let totalPages = 1;
+
+  async function loadUsers(page = 0) {
+    document.getElementById('loader').style.display = 'flex';
+    document.getElementById('tableWrapper').style.display = 'none';
+
+    try {
+      const data = await API.get(`/users/admin/all?page=${page}&size=${PAGE_SIZE}`, token);
+      allUsers   = data.users || [];
+      totalPages = data.totalPages || 1;
+      currentPage = data.page || 0;
+
+      document.getElementById('totalUsersCount').textContent = `${data.totalElements} total users`;
+      document.getElementById('loader').style.display = 'none';
+
+      renderTable(allUsers);
+      renderPagination();
+
+    } catch (err) {
+      document.getElementById('loader').style.display = 'none';
+      API.showToast('Failed to load users.', 'error');
+    }
+  }
+
+  function renderTable(users) {
+    const tbody  = document.getElementById('usersTable');
+    const wrapper = document.getElementById('tableWrapper');
+    const empty  = document.getElementById('emptyState');
+
+    if (!users || users.length === 0) {
+      wrapper.style.display = 'none';
+      empty.classList.remove('d-none');
+      return;
+    }
+
+    empty.classList.add('d-none');
+    wrapper.style.display = 'block';
+
+    tbody.innerHTML = users.map((u, i) => `
+      <tr>
+        <td>${currentPage * PAGE_SIZE + i + 1}</td>
+        <td><strong>${u.name}</strong></td>
+        <td>${u.email}</td>
+        <td>${u.mobile}</td>
+        <td>${u.gender || '—'}</td>
+        <td>${API.formatDate(u.createdAt)}</td>
+        <td>
+          <button class="btn btn-danger btn-sm" onclick="openDeleteModal(${u.userId}, '${u.name.replace(/'/g, "\\'")}')">Delete</button>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  function searchUsers() {
+    const q = document.getElementById('searchInput').value.toLowerCase();
+    const filtered = allUsers.filter(u =>
+      u.name.toLowerCase().includes(q) ||
+      u.email.toLowerCase().includes(q) ||
+      (u.mobile || '').includes(q)
+    );
+    renderTable(filtered);
+  }
+
+  function renderPagination() {
+    const pg = document.getElementById('pagination');
+    if (totalPages <= 1) { pg.innerHTML = ''; return; }
+
+    let html = `<button onclick="loadUsers(${currentPage - 1})" ${currentPage === 0 ? 'disabled' : ''}>‹</button>`;
+    for (let i = 0; i < totalPages; i++) {
+      html += `<button class="${i === currentPage ? 'active' : ''}" onclick="loadUsers(${i})">${i + 1}</button>`;
+    }
+    html += `<button onclick="loadUsers(${currentPage + 1})" ${currentPage >= totalPages - 1 ? 'disabled' : ''}>›</button>`;
+    pg.innerHTML = html;
+  }
+
+  function openDeleteModal(id, name) {
+    deleteUserId = id;
+    document.getElementById('deleteUserName').textContent = name;
+    document.getElementById('deleteModal').classList.add('open');
+  }
+
+  function closeDeleteModal() {
+    deleteUserId = null;
+    document.getElementById('deleteModal').classList.remove('open');
+  }
+
+  async function confirmDelete() {
+    if (!deleteUserId) return;
+    const btn = document.getElementById('confirmDeleteBtn');
+    btn.disabled = true;
+    btn.textContent = 'Deleting…';
+
+    try {
+      await API.del(`/users/admin/${deleteUserId}`, token);
+      closeDeleteModal();
+      API.showToast('User deleted successfully.', 'success');
+      loadUsers(currentPage);
+    } catch (err) {
+      API.showToast(err.message || 'Delete failed.', 'error');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Delete User';
+    }
+  }
+
+  loadUsers();
+</script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+@charset "UTF-8";
+
+body {
+	font-family: Poppins, sans-serif;
+	background: #f5f7fb;
+	color: #212529;
+	min-height: 100vh
+}
+
+.navbar {
+	padding: 12px
+}
+
+.navbar-brand {
+	font-weight: 700
+}
+
+.nav-link {
+	color: white !important
+}
+
+.nav-link:hover {
+	color: #ffc107 !important
+}
+
+.card {
+	border: none;
+	border-radius: 12px
+}
+
+.page-title {
+	margin: 30px 0;
+	font-weight: 600
+}
+
+.btn {
+	border-radius: 7px
+}
+
+footer {
+	margin-top: 50px
+}
+
+#message {
+	display: none;
+}
+
+/* ==========================================================================
+   Interactive Destination Rating Modal & Star Styles
+   ========================================================================== */
+.star-rating-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 15px 0 10px;
+}
+
+.star-rating-container .star-item {
+    font-size: 2.2rem;
+    color: #cbd5e1;
+    cursor: pointer;
+    transition: transform 0.15s ease, color 0.15s ease;
+    user-select: none;
+}
+
+.star-rating-container .star-item:hover,
+.star-rating-container .star-item.hovered {
+    color: #f59e0b;
+    transform: scale(1.22);
+}
+
+.star-rating-container .star-item.selected {
+    color: #f59e0b;
+}
+
+.rating-score-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.rating-score-badge:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.25);
+}
+
+.rating-pill-interactive {
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.2s ease;
+}
+
+.rating-pill-interactive:hover {
+    transform: scale(1.05);
+    filter: brightness(0.95);
+}

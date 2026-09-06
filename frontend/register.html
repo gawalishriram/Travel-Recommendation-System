@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register — TravelSphere</title>
+  <meta name="description" content="Create your TravelSphere account." />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<div class="auth-page">
+  <div class="auth-card" style="max-width:520px">
+    <div class="auth-logo">
+      <div class="logo-icon">🌐</div>
+      <h2>Create Account</h2>
+      <p>Join TravelSphere and start exploring</p>
+    </div>
+
+    <div class="alert alert-danger" id="alertBox"><span>⚠️</span><span id="alertMsg"></span></div>
+    <div class="alert alert-success" id="successBox"><span>✅</span><span id="successMsg"></span></div>
+
+    <form id="registerForm" novalidate>
+      <div class="form-group">
+        <label class="form-label" for="name">Full Name</label>
+        <input type="text" id="name" class="form-control" placeholder="Rahul Sharma" required />
+        <div class="form-error" id="nameError">Name must be at least 3 characters.</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="email">Email Address</label>
+        <input type="email" id="email" class="form-control" placeholder="you@example.com" autocomplete="email" required />
+        <div class="form-error" id="emailError">Please enter a valid email.</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="mobile">Mobile Number</label>
+        <input type="tel" id="mobile" class="form-control" placeholder="9876543210" maxlength="10" required />
+        <div class="form-error" id="mobileError">Enter a valid 10-digit mobile number (starts with 6-9).</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="gender">Gender</label>
+        <select id="gender" class="form-control" required>
+          <option value="">Select gender</option>
+          <option>Male</option><option>Female</option><option>Other</option>
+        </select>
+        <div class="form-error" id="genderError">Please select your gender.</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="address">Address</label>
+        <textarea id="address" class="form-control" rows="2" placeholder="123 Street, City, State" required></textarea>
+        <div class="form-error" id="addressError">Address is required.</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="password">Password</label>
+        <input type="password" id="password" class="form-control" placeholder="Min. 6 characters" autocomplete="new-password" required />
+        <div class="form-error" id="passwordError">Password must be at least 6 characters.</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="confirmPassword">Confirm Password</label>
+        <input type="password" id="confirmPassword" class="form-control" placeholder="Repeat your password" autocomplete="new-password" required />
+        <div class="form-error" id="confirmPasswordError">Passwords do not match.</div>
+      </div>
+      <button type="submit" class="btn btn-primary w-100 btn-lg mt-2" id="submitBtn">Create Account</button>
+    </form>
+
+    <div class="auth-divider">or</div>
+    <div class="text-center" style="font-size:0.9rem;color:var(--text-secondary)">
+      Already have an account? <a href="login.html" class="text-teal fw-600">Login</a>
+    </div>
+  </div>
+</div>
+
+<script src="js/auth.js"></script>
+<script src="js/api.js"></script>
+<script>
+  Auth.redirectIfUserLoggedIn('user-dashboard.html');
+
+  const form = document.getElementById('registerForm');
+  const btn  = document.getElementById('submitBtn');
+  const fe   = id => document.getElementById(id);
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    fe('alertBox').classList.remove('show');
+
+    const name=fe('name').value.trim(), email=fe('email').value.trim(),
+          mobile=fe('mobile').value.trim(), gender=fe('gender').value,
+          address=fe('address').value.trim(), password=fe('password').value,
+          confirmPassword=fe('confirmPassword').value;
+
+    const show=(id,v)=>fe(id).classList[v?'add':'remove']('show');
+    show('nameError',    !name||name.length<3);
+    show('emailError',   !email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email));
+    show('mobileError',  !mobile||!/^[6-9][0-9]{9}$/.test(mobile));
+    show('genderError',  !gender);
+    show('addressError', !address);
+    show('passwordError',!password||password.length<6);
+    show('confirmPasswordError', password!==confirmPassword);
+
+    if (!name||name.length<3||!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)||!mobile||!/^[6-9][0-9]{9}$/.test(mobile)||!gender||!address||!password||password.length<6||password!==confirmPassword) return;
+
+    btn.disabled=true; btn.textContent='Creating account…';
+    try {
+      await API.post('/users/register', {name,email,mobile,gender,address,password});
+      fe('successMsg').textContent='Account created! Redirecting to login…';
+      fe('successBox').classList.add('show');
+      setTimeout(()=>window.location.href='login.html', 1800);
+    } catch(err) {
+      fe('alertMsg').textContent=err.message||'Registration failed.';
+      fe('alertBox').classList.add('show');
+      btn.disabled=false; btn.textContent='Create Account';
+    }
+  });
+</script>
+</body>
+</html>

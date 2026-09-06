@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Dashboard — TravelSphere</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="index.html" class="nav-brand">🌐 TravelSphere</a>
+  <ul class="nav-links">
+    <li><a href="user-dashboard.html" class="active">Dashboard</a></li>
+    <li><a href="destinations.html">Destinations</a></li>
+    <li><a href="my-bookings.html">My Bookings</a></li>
+    <li><a href="profile.html">Profile</a></li>
+    <li><a href="#" onclick="Auth.logoutUser('login.html')">Logout</a></li>
+  </ul>
+</nav>
+
+<div class="page-container">
+
+  <!-- USER HEADER -->
+  <div class="page-header d-flex justify-between align-center flex-wrap gap-2 mb-3">
+    <div class="d-flex align-center gap-2">
+      <div style="width:56px;height:56px;background:var(--teal-dim);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.75rem;border:1px solid var(--border-focus);flex-shrink:0">👤</div>
+      <div>
+        <h1 class="page-title" id="welcomeName" style="font-size:1.8rem">Welcome back!</h1>
+        <p class="page-subtitle" id="welcomeEmail"></p>
+      </div>
+    </div>
+    <div class="d-flex gap-1">
+      <a href="destinations.html" class="btn btn-primary">+ Explore Trips</a>
+      <a href="profile.html" class="btn btn-secondary">Edit Profile</a>
+    </div>
+  </div>
+
+  <!-- STATS OVERVIEW -->
+  <div class="grid grid-3 mb-3">
+    <div class="card stat-card">
+      <div class="stat-icon stat-icon-teal">🧳</div>
+      <div class="stat-info">
+        <div class="stat-value" id="statTotal">—</div>
+        <div class="stat-label">Total Bookings</div>
+      </div>
+    </div>
+    <div class="card stat-card">
+      <div class="stat-icon stat-icon-gold">✅</div>
+      <div class="stat-info">
+        <div class="stat-value" id="statConfirmed">—</div>
+        <div class="stat-label">Confirmed Trips</div>
+      </div>
+    </div>
+    <div class="card stat-card">
+      <div class="stat-icon stat-icon-purple">❤️</div>
+      <div class="stat-info">
+        <div class="stat-value" id="statFavorites">—</div>
+        <div class="stat-label">Saved Favorites</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SMART RECOMMENDATION SECTION -->
+  <div class="recommend-box mb-3">
+    <div class="d-flex justify-between align-center flex-wrap gap-2 mb-2">
+      <div>
+        <h2 style="font-size:1.25rem;font-weight:700;color:var(--teal)">✨ Personalized Travel Recommendations</h2>
+        <p class="text-secondary" style="font-size:0.88rem">Get smart recommendations based on your budget, season, and travel style</p>
+      </div>
+      <span class="badge badge-teal">Smart Engine</span>
+    </div>
+
+    <form id="recForm" onsubmit="getRecommendations(event)" class="filter-bar" style="margin-bottom:1rem;gap:0.75rem">
+      <div style="flex:1;min-width:180px">
+        <label style="font-size:0.78rem;color:var(--text-muted);text-transform:uppercase;font-weight:600;display:block;margin-bottom:4px">Max Budget (₹)</label>
+        <input type="number" id="recBudget" placeholder="e.g. 15000" min="0" step="500" class="form-control" style="padding:0.6rem 1rem" />
+      </div>
+      <div style="flex:1;min-width:160px">
+        <label style="font-size:0.78rem;color:var(--text-muted);text-transform:uppercase;font-weight:600;display:block;margin-bottom:4px">Season</label>
+        <select id="recSeason" class="form-control" style="padding:0.6rem 1rem">
+          <option value="Any">Any Season</option>
+          <option value="Summer">Summer</option>
+          <option value="Winter">Winter</option>
+          <option value="Monsoon">Monsoon</option>
+          <option value="Spring">Spring</option>
+          <option value="Autumn">Autumn</option>
+          <option value="Year Round">Year Round</option>
+        </select>
+      </div>
+      <div style="flex:1;min-width:160px">
+        <label style="font-size:0.78rem;color:var(--text-muted);text-transform:uppercase;font-weight:600;display:block;margin-bottom:4px">Category / Type</label>
+        <select id="recCategory" class="form-control" style="padding:0.6rem 1rem">
+          <option value="Any">All Categories</option>
+          <option value="Beach">Beach</option>
+          <option value="Mountain">Mountain</option>
+          <option value="Heritage">Heritage</option>
+          <option value="Adventure">Adventure</option>
+          <option value="Wildlife">Wildlife</option>
+          <option value="City">City</option>
+          <option value="Hill Station">Hill Station</option>
+          <option value="Spiritual">Spiritual</option>
+        </select>
+      </div>
+      <div style="display:flex;align-items:flex-end">
+        <button type="submit" class="btn btn-primary" id="recBtn" style="padding:0.65rem 1.5rem">Find Recommendations</button>
+      </div>
+    </form>
+
+    <div id="recLoader" class="loading-state d-none" style="padding:1.5rem"><div class="spinner"></div></div>
+    <div id="recGrid" class="grid grid-3 mt-2" style="display:none"></div>
+    <div id="recEmpty" class="text-center text-muted d-none" style="padding:1.5rem">
+      <p>No matching destinations found for this criteria. Try increasing budget or selecting "Any Season".</p>
+    </div>
+  </div>
+
+  <!-- MY FAVORITES SECTION -->
+  <div class="card mb-3" style="padding:1.5rem">
+    <div class="d-flex justify-between align-center mb-2">
+      <div>
+        <h2 style="font-size:1.15rem;font-weight:700">❤️ My Saved Favorites</h2>
+        <p class="text-secondary" style="font-size:0.85rem">Destinations you've bookmarked for later</p>
+      </div>
+      <a href="destinations.html" class="text-teal" style="font-size:0.85rem">+ Browse More</a>
+    </div>
+    
+    <div id="favLoader" class="spinner"></div>
+    <div id="favGrid" class="grid grid-3" style="display:none"></div>
+    <div id="favEmpty" class="empty-state d-none" style="padding:2rem">
+      <div class="empty-icon">🤍</div>
+      <h3>No favorites saved yet</h3>
+      <p class="text-muted">Click the heart icon on any destination to save it here!</p>
+      <a href="destinations.html" class="btn btn-primary mt-2">Explore Destinations</a>
+    </div>
+  </div>
+
+  <!-- RECENT BOOKINGS -->
+  <div class="card mb-3" style="padding:1.5rem">
+    <div class="d-flex justify-between align-center mb-2">
+      <div>
+        <h2 style="font-size:1.15rem;font-weight:700">🧳 Recent Bookings</h2>
+        <p class="text-secondary" style="font-size:0.85rem">Your upcoming and past reservations</p>
+      </div>
+      <a href="my-bookings.html" class="text-teal" style="font-size:0.85rem">View All →</a>
+    </div>
+    <div id="bookLoader" class="spinner"></div>
+    <div id="recentList"></div>
+    <div id="emptyBookings" class="empty-state d-none" style="padding:2rem">
+      <div class="empty-icon">🗺️</div>
+      <h3>No bookings made yet</h3>
+      <a href="destinations.html" class="btn btn-primary mt-2">Book a Trip Now</a>
+    </div>
+  </div>
+
+</div>
+
+<footer class="footer"><p>© 2026 <span>TravelSphere</span>. All rights reserved.</p></footer>
+
+<script src="js/auth.js"></script>
+<script src="js/api.js"></script>
+<script>
+  if (!Auth.requireUser()) throw 0;
+  const user = Auth.getUser();
+  const token = Auth.getUserToken();
+
+  document.getElementById('welcomeName').textContent  = 'Welcome back, ' + (user.name || 'Traveler') + '!';
+  document.getElementById('welcomeEmail').textContent = user.email || '';
+
+  async function loadDashboard() {
+    // 1. Load Bookings
+    try {
+      const bookings = await API.get('/bookings', token);
+      const bookingList = Array.isArray(bookings) ? bookings : [];
+      document.getElementById('statTotal').textContent     = bookingList.length;
+      document.getElementById('statConfirmed').textContent = bookingList.filter(b => b.status === 'CONFIRMED').length;
+      document.getElementById('bookLoader').style.display = 'none';
+
+      const recent = bookingList.slice(0, 4);
+      if (!recent.length) {
+        document.getElementById('emptyBookings').classList.remove('d-none');
+      } else {
+        document.getElementById('recentList').innerHTML = recent.map(b => `
+          <div class="d-flex align-center justify-between flex-wrap gap-2" style="padding:.85rem 0;border-bottom:1px solid var(--border)">
+            <div>
+              <div class="fw-600">${b.destinationName || 'Destination'}</div>
+              <div class="text-secondary" style="font-size:.82rem">Travel: ${API.formatDate(b.travelDate)} · ${b.numberOfPeople || b.numberOfTravelers || 1} traveler(s)</div>
+            </div>
+            <div class="d-flex align-center gap-2">
+              <div class="text-teal fw-600">${API.formatCurrency(b.totalAmount)}</div>
+              <span class="status-${(b.status || 'CONFIRMED').toLowerCase()}">${b.status || 'CONFIRMED'}</span>
+              <a href="destination-detail.html?id=${b.destinationId}" class="btn btn-secondary btn-sm">View</a>
+            </div>
+          </div>`).join('');
+      }
+    } catch {
+      document.getElementById('bookLoader').style.display = 'none';
+      document.getElementById('emptyBookings').classList.remove('d-none');
+    }
+
+    // 2. Load Favorites
+    loadFavorites();
+
+    // 3. Load Default Recommendations
+    loadInitialRecommendations();
+  }
+
+  async function loadFavorites() {
+    const favGrid = document.getElementById('favGrid');
+    const favEmpty = document.getElementById('favEmpty');
+    const favLoader = document.getElementById('favLoader');
+
+    try {
+      const favorites = await API.get('/favorites', token);
+      const list = Array.isArray(favorites) ? favorites : [];
+      document.getElementById('statFavorites').textContent = list.length;
+      favLoader.style.display = 'none';
+
+      if (!list.length) {
+        favGrid.style.display = 'none';
+        favEmpty.classList.remove('d-none');
+        return;
+      }
+
+      favEmpty.classList.add('d-none');
+      favGrid.style.display = 'grid';
+
+      favGrid.innerHTML = list.map(f => `
+        <div class="card destination-card">
+          <button type="button" class="card-fav-btn active" onclick="removeFavorite(event, ${f.destinationId})" title="Remove from favorites">
+            ❤️
+          </button>
+          <div onclick="window.location.href='destination-detail.html?id=${f.destinationId}'" style="cursor:pointer">
+            ${f.imageUrl ? `<img src="${f.imageUrl}" alt="${f.name || f.destinationName}" class="card-img" onerror="this.onerror=null;this.parentElement.innerHTML='<div class=\\'card-img-placeholder\\'>🏝️</div>';"/>` : `<div class="card-img-placeholder">🏝️</div>`}
+            <div class="card-body">
+              <div class="d-flex justify-between align-center mb-1">
+                <span class="badge badge-teal">${f.season || 'Any Season'}</span>
+                <span class="badge badge-gold">${f.category || 'Travel'}</span>
+              </div>
+              <h3 class="card-title">${f.name || f.destinationName}</h3>
+              <p class="card-text">${f.description || ''}</p>
+              <div class="card-meta">
+                <div class="rating">⭐ ${f.rating != null ? f.rating.toFixed(1) : '—'}</div>
+                <div class="text-teal fw-700">${API.formatCurrency(f.budget || f.price)}<small class="text-secondary"> /person</small></div>
+              </div>
+            </div>
+          </div>
+        </div>`).join('');
+    } catch {
+      favLoader.style.display = 'none';
+      favEmpty.classList.remove('d-none');
+    }
+  }
+
+  async function removeFavorite(event, destinationId) {
+    event.stopPropagation();
+    try {
+      await API.del(`/favorites/${destinationId}`, token);
+      API.showToast('Removed from favorites', 'info');
+      loadFavorites();
+    } catch (err) {
+      API.showToast(err.message || 'Failed to remove', 'error');
+    }
+  }
+
+  async function loadInitialRecommendations() {
+    await getRecommendationsInternal({ budget: 50000, season: 'Any', category: 'Any' });
+  }
+
+  async function getRecommendations(event) {
+    if (event) event.preventDefault();
+    const budgetVal = parseFloat(document.getElementById('recBudget').value) || 100000;
+    const seasonVal = document.getElementById('recSeason').value || 'Any';
+    const catVal    = document.getElementById('recCategory').value || 'Any';
+
+    await getRecommendationsInternal({ budget: budgetVal, season: seasonVal, category: catVal });
+  }
+
+  async function getRecommendationsInternal(payload) {
+    const recGrid = document.getElementById('recGrid');
+    const recLoader = document.getElementById('recLoader');
+    const recEmpty = document.getElementById('recEmpty');
+    const recBtn = document.getElementById('recBtn');
+
+    recBtn.disabled = true;
+    recLoader.classList.remove('d-none');
+    recGrid.style.display = 'none';
+    recEmpty.classList.add('d-none');
+
+    try {
+      const recs = await API.post('/recommendations', {
+        budget: payload.budget,
+        season: payload.season,
+        category: payload.category,
+        travelType: payload.category
+      }, token);
+
+      recLoader.classList.add('d-none');
+      recBtn.disabled = false;
+
+      const items = Array.isArray(recs) ? recs.slice(0, 6) : [];
+      if (!items.length) {
+        recEmpty.classList.remove('d-none');
+        return;
+      }
+
+      recGrid.style.display = 'grid';
+      recGrid.innerHTML = items.map(d => `
+        <div class="card destination-card" onclick="window.location.href='destination-detail.html?id=${d.destinationId}'" style="cursor:pointer">
+          ${d.imageUrl ? `<img src="${d.imageUrl}" alt="${d.name}" class="card-img" onerror="this.onerror=null;this.parentElement.innerHTML='<div class=\\'card-img-placeholder\\'>🏝️</div>';"/>` : `<div class="card-img-placeholder">🏝️</div>`}
+          <div class="card-body">
+            <div class="d-flex justify-between align-center mb-1">
+              <span class="badge badge-teal">${d.season || 'Any Season'}</span>
+              <span class="badge badge-gold">${d.category || 'Travel'}</span>
+            </div>
+            <h3 class="card-title">${d.name}</h3>
+            <p class="card-text">${d.description || ''}</p>
+            <div class="card-meta">
+              <div class="rating">⭐ ${d.rating != null ? d.rating.toFixed(1) : '—'}</div>
+              <div class="text-teal fw-700">${API.formatCurrency(d.budget)}<small class="text-secondary"> /person</small></div>
+            </div>
+          </div>
+        </div>`).join('');
+    } catch (err) {
+      recLoader.classList.add('d-none');
+      recBtn.disabled = false;
+      recEmpty.classList.remove('d-none');
+    }
+  }
+
+  loadDashboard();
+</script>
+</body>
+</html>
