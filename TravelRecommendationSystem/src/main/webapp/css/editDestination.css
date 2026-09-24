@@ -1,0 +1,249 @@
+@charset "UTF-8";
+
+
+/* =========================================================
+   PAGE
+   ========================================================= */
+
+body {
+    font-family: "Poppins", sans-serif;
+}
+
+
+.page-header {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+}
+
+
+.page-header h2 {
+
+    color: #1e293b;
+
+    font-weight: 700;
+
+    margin: 0 0 5px;
+}
+
+
+/* =========================================================
+   FORM CARD
+   ========================================================= */
+
+.destination-form-card {
+
+    background: #ffffff;
+
+    padding: 32px;
+
+    border-radius: 20px;
+
+    border: 1px solid #eef2f7;
+
+    box-shadow:
+        0 10px 25px rgba(0, 0, 0, 0.07);
+}
+
+
+/* =========================================================
+   LABEL
+   ========================================================= */
+
+.destination-form-card .form-label {
+
+    display: block;
+
+    font-weight: 600;
+
+    margin-bottom: 8px;
+
+    color: #334155;
+}
+
+
+/* =========================================================
+   INPUT
+   ========================================================= */
+
+.destination-form-card .form-control,
+.destination-form-card .form-select {
+
+    min-height: 50px;
+
+    border-radius: 12px;
+
+    border: 1px solid #cbd5e1;
+
+    padding: 10px 14px;
+
+    transition: all 0.2s ease;
+}
+
+
+.destination-form-card textarea.form-control {
+
+    min-height: 130px;
+
+    resize: vertical;
+}
+
+
+.destination-form-card
+.form-control:focus,
+.destination-form-card
+.form-select:focus {
+
+    border-color: #2563eb;
+
+    box-shadow:
+        0 0 0 0.2rem
+        rgba(37, 99, 235, 0.12);
+}
+
+
+/* =========================================================
+   INPUT GROUP
+   ========================================================= */
+
+.destination-form-card
+.input-group-text {
+
+    border-radius:
+        12px 0 0 12px;
+
+    background: #f8fafc;
+
+    border-color: #cbd5e1;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   PREVIEW
+   ========================================================= */
+
+.destination-image-preview-container {
+
+    margin-top: 5px;
+
+    padding: 25px;
+
+    background: #f8fafc;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 15px;
+
+    text-align: center;
+
+    min-height: 180px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+}
+
+
+.destination-image-preview {
+
+    display: block;
+
+    width: 100%;
+
+    max-width: 420px;
+
+    height: 230px;
+
+    object-fit: cover;
+
+    margin: 0 auto;
+
+    border-radius: 15px;
+
+    border: 1px solid #e2e8f0;
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.destination-form-card button,
+.destination-form-card a {
+
+    border-radius: 10px;
+
+    padding: 10px 20px;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    .page-header {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+
+    .destination-form-card {
+
+        padding: 22px;
+    }
+
+
+    .destination-image-preview {
+
+        height: 200px;
+    }
+
+}
+
+
+@media (max-width: 576px) {
+
+    .main-content {
+
+        padding: 20px 15px;
+    }
+
+
+    .destination-form-card {
+
+        padding: 17px;
+
+        border-radius: 15px;
+    }
+
+
+    .destination-form-card
+    button,
+    .destination-form-card
+    a {
+
+        width: 100%;
+    }
+
+
+    .destination-image-preview {
+
+        height: 180px;
+    }
+
+}

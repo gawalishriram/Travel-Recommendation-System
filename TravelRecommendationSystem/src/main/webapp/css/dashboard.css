@@ -1,0 +1,160 @@
+@charset "UTF-8";
+
+/* =========================================================
+   USER DASHBOARD STYLES
+   ========================================================= */
+
+.dashboard-welcome {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    border-radius: 20px;
+    padding: 30px;
+    color: #ffffff;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
+    margin-bottom: 25px;
+    position: relative;
+    overflow: hidden;
+}
+
+.dashboard-welcome::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 350px;
+    height: 350px;
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.25) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+/* Stat Cards */
+.user-stat-card {
+    min-height: 130px;
+    border-radius: 20px;
+    padding: 22px 24px;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.user-stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 100%);
+    pointer-events: none;
+}
+
+.user-stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 16px 36px rgba(15, 23, 42, 0.16);
+    color: #ffffff;
+}
+
+.card-destinations { background: linear-gradient(135deg, #2563eb, #38bdf8); }
+.card-favorites { background: linear-gradient(135deg, #e11d48, #fb7185); }
+.card-bookings { background: linear-gradient(135deg, #059669, #34d399); }
+.card-recommend { background: linear-gradient(135deg, #7c3aed, #a855f7); }
+
+.user-stat-card .dashboard-stat-icon {
+    width: 54px;
+    height: 54px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.22);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: #ffffff;
+    flex-shrink: 0;
+}
+
+.user-stat-card .dashboard-stat-value {
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1.1;
+}
+
+.user-stat-card .dashboard-stat-label {
+    font-size: 13px;
+    font-weight: 500;
+    opacity: 0.9;
+    margin-top: 4px;
+}
+
+/* Category Chips */
+.cat-chip {
+    transition: all 0.2s ease;
+    font-weight: 500;
+    font-size: 0.85rem;
+    border: 1px solid #e2e8f0;
+}
+
+.cat-chip:hover {
+    transform: translateY(-1px);
+}
+
+.cat-chip.active {
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+/* Destination Cards */
+.dest-card {
+    background: #ffffff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 18px rgba(15, 23, 42, 0.06);
+    border: 1px solid #f1f5f9;
+    transition: all 0.28s ease;
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.dest-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 36px rgba(15, 23, 42, 0.12);
+    border-color: #e2e8f0;
+}
+
+.dest-card img {
+    height: 210px;
+    width: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.dest-card:hover img {
+    transform: scale(1.03);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .dashboard-welcome {
+        padding: 20px;
+    }
+
+    .user-stat-card {
+        padding: 18px;
+        min-height: 110px;
+    }
+
+    .user-stat-card .dashboard-stat-value {
+        font-size: 24px;
+    }
+
+    .dest-card img {
+        height: 180px;
+    }
+}
